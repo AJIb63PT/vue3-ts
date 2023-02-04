@@ -1,11 +1,11 @@
 
-#weather-widget#
-##app on vue 3 with typeScript##
+# weather-widget #
+## app on vue 3 with typeScript ##
 
-##github page##
+## github page ##
 https://ajib63pt.github.io/vue3-ts/
 
-##to use widget##
+## to use widget in HTML##
     <iframe src="https://ajib63pt.github.io/vue3-ts/" 
         frameborder="0"
         width="680"
