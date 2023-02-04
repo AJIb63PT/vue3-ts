@@ -1,0 +1,133 @@
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotation {
+
+    0%,
+    90% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 660px) {
+    .navbar {
+        width: calc(100% - 40px);
+    }
+}
+
+
+@keyframes shakeInput {
+    0% {
+        margin-left: -5px;
+        margin-right: 5px;
+    }
+
+    25% {
+        margin-left: 5px;
+        margin-right: -5px;
+    }
+
+    50% {
+        margin-left: -5px;
+        margin-right: 5px;
+    }
+
+    75% {
+        margin-left: 5px;
+        margin-right: -5px;
+    }
+
+    100% {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@keyframes shakeIcon {
+    0% {
+        left: 5px;
+    }
+
+    25% {
+        left: 15px;
+    }
+
+    50% {
+        margin-left: -5px;
+    }
+
+    75% {
+        margin-left: 5px;
+    }
+
+    100% {
+        left: 10px;
+    }
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn_slideUp {
+    0% {
+        opacity: 0;
+        margin-top: 40px;
+    }
+
+    100% {
+        opacity: 1;
+        margin-top: 0;
+    }
+}
+
+@keyframes fadeOut_slideDown {
+    0% {
+        opacity: 1;
+        margin-top: 0;
+    }
+
+    100% {
+        opacity: 0;
+        margin-top: 40px;
+    }
+}
