@@ -5,7 +5,7 @@
 ## github page ##
 https://ajib63pt.github.io/vue3-ts/
 
-## to use widget in HTML##
+## to use widget in HTML ##
     <iframe src="https://ajib63pt.github.io/vue3-ts/" 
         frameborder="0"
         width="680"
