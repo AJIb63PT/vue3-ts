@@ -1,25 +1,26 @@
 <template>
 	<div>
-		<p class="settings__content__title">Your Locations</p>
-		<div class="settings__content__locations" @dragover.prevent>
-			<div v-for="item in locations" :key="item.id" class="settings__content__locations__item" draggable="true"
-				@dragstart="onDragStart($event, item)" @dragenter="onDragEnter($event)" @dragleave="onDragLeave($event)"
-				@drop="onDrop($event, item)">
-				<div class="settings__content__locations__item__drag_icon">
-					<svg>
+		<p class='text-text mb-4'>Your Locations</p>
+		<div class="flex flex-col gap-2.5" @dragover.prevent>
+			<div v-for="item in locations" :key="item.id" id='location-item'
+				class="flex items-center w-full h-10 leading-6 bg-background-shield transition-[0.275s] p-2 rounded-[10px]"
+				draggable="true" @dragstart="onDragStart($event, item)" @dragenter="onDragEnter($event)"
+				@dragleave="onDragLeave($event)" @drop="onDrop($event, item)">
+				<div class="min-w-[24px] max-w-[24px] h-6 cursor-move mr-[5px] mt-[7px]">
+					<svg viewBox='0 0 24 24' class="fill-text pointer-events-none transition-[0.275s]">
 						<path
 							d="M14.5 15.5a1.5 1.5 0 11-.001 3.001A1.5 1.5 0 0114.5 15.5zm-5 0a1.5 1.5 0 11-.001 3.001A1.5 1.5 0 019.5 15.5zm5-5a1.5 1.5 0 11-.001 3.001A1.5 1.5 0 0114.5 10.5zm-5 0a1.5 1.5 0 11-.001 3.001A1.5 1.5 0 019.5 10.5zm5-5a1.5 1.5 0 11-.001 3.001A1.5 1.5 0 0114.5 5.5zm-5 0a1.5 1.5 0 11-.001 3.001A1.5 1.5 0 019.5 5.5z">
 						</path>
 					</svg>
 				</div>
 
-				<div class="settings__content__locations__item__title">
+				<div class="w-full flex items-center pointer-events-none">
 					<p>{{ item.city }}</p>
 
 				</div>
 
-				<div class="settings__content__locations__item__remove_icon" @click="removeLocation(item)">
-					<svg viewBox="0 0 407.521 407.521">
+				<div class="relative min-w-[24px] h-6 cursor-pointer p-[11px" @click="removeLocation(item)">
+					<svg class="absolute w-[18px] pointer-events-none transition-[0.275s]" viewBox="0 0 407.521 407.521">
 						<path
 							d="M335.94,114.944H71.581c-2.86-0.243-5.694,0.702-7.837,2.612c-2.107,2.024-3.083,4.954-2.612,7.837l27.167,236.669 c3.186,26.093,25.436,45.647,51.722,45.453h131.657c27.026,0.385,49.791-20.104,52.245-47.02l22.465-236.147 c0.139-2.533-0.811-5.005-2.612-6.792C341.634,115.646,338.8,114.701,335.94,114.944z M303.026,359.45 c-1.642,15.909-15.366,27.803-31.347,27.167H140.022c-15.694,0.637-29.184-11.024-30.825-26.645L83.075,135.842h241.371 L303.026,359.45z" />
 						<path
@@ -59,21 +60,19 @@ export default defineComponent({
 		},
 
 		onDragEnter(event: any) {
-			if (this.isInArray("settings__content__locations__item", event.target.classList)) {
-				event.target.classList.add("settings__content__locations__item__over");
+			event.target.classList.add("bg-secondary");
+			if (this.isInArray("#settings__content__locations__item", event.target.id)) {
 			}
 		},
 
 		onDragLeave(event: any) {
-			event.target.classList.remove("settings__content__locations__item__over");
+			event.target.classList.remove("bg-secondary");
 		},
 
 		onDrop(event: any, item: { id: number }) {
 			let startIndex = event.dataTransfer.getData("startIndex");
 			let endIndex = this.locations.findIndex((e: { id: number }) => e.id == item.id);
-
-			document.getElementsByClassName("settings__content__locations__item")
-			[endIndex].classList.remove("settings__content__locations__item__over");
+			document.querySelectorAll<any>("#location-item")[endIndex].classList.remove("bg-secondary");
 
 			let locations = this.swapItems(this.locations, startIndex, endIndex);
 			this.$store.dispatch("setLocalStorageLocations", locations);
@@ -103,80 +102,3 @@ export default defineComponent({
 	},
 });
 </script>
-
-<style lang='scss'>
-.settings__content {
-
-	&__locations {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	&__locations__item {
-		display: flex;
-		width: 100%;
-		height: 40px;
-		line-height: 24px;
-		background-color: var(--background-color-shield);
-		border-radius: 10px;
-		padding: 8px;
-		transition: 0.275s;
-
-		&__over {
-			background: var(--background-color-secondary);
-		}
-
-		&__drag_icon {
-			min-width: 24px;
-			max-width: 24px;
-			height: 24px;
-			margin-right: 5px;
-			margin-top: 7px;
-			cursor: move;
-
-			svg {
-				fill: var(--text-color-hover);
-				pointer-events: none;
-				transition: 0.275s;
-			}
-		}
-
-		&__title {
-			width: 100%;
-			display: flex;
-			align-items: center;
-			pointer-events: none;
-
-			img {
-				margin: auto 0;
-				margin-left: 5px;
-				border-radius: 2px;
-			}
-		}
-	}
-
-	&__locations__item__drag_icon:hover svg {
-		fill: var(--text-color);
-	}
-
-	&__locations__item__remove_icon {
-		position: relative;
-		min-width: 24px;
-		height: 24px;
-		padding: 11px;
-		cursor: pointer;
-
-		svg {
-			position: absolute;
-			width: 18px;
-			pointer-events: none;
-			transition: 0.275s;
-		}
-	}
-
-	&__locations__item__remove_icon:hover svg {
-		fill: var(--text-color);
-	}
-}
-</style>
