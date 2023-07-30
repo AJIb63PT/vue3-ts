@@ -33,72 +33,69 @@
 </template>
 
 <script lang='ts'>
-import { mapGetters } from "vuex";
-import { defineComponent } from 'vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+export default {
 
-export default defineComponent({
-	computed: {
-		...mapGetters({
-			locations: "GET_LOCATIONS",
-		}),
-	},
+	setup() {
+		const store = useStore()
+		const locations: any = computed(() => store.getters['GET_LOCATIONS']);
 
-	methods: {
-		isInArray(needle: string, haystack: string[]) {
-			for (var i in haystack) {
-				if (haystack[i] == needle) return true;
-			}
-			return false;
-		},
-
-		onDragStart(event: any, item: { id: number, city: string }) {
+		const onDragStart = (event: any, item: { id: number, city: string }) => {
 			event.dataTransfer.dropEffect = "move";
 			event.dataTransfer.effectAllowed = "move";
 
-			let startIndex = this.locations.findIndex((e: { id: number }) => e.id == item.id);
+			let startIndex = locations.value.findIndex((e: { id: number }) => e.id == item.id);
 			event.dataTransfer.setData("startIndex", startIndex);
-		},
+		}
 
-		onDragEnter(event: any) {
+		const onDragEnter = (event: any) => {
 			event.target.classList.add("bg-secondary");
-			if (this.isInArray("#settings__content__locations__item", event.target.id)) {
-			}
-		},
+		}
 
-		onDragLeave(event: any) {
+		const onDragLeave = (event: any) => {
 			event.target.classList.remove("bg-secondary");
-		},
+		}
 
-		onDrop(event: any, item: { id: number }) {
+		const onDrop = (event: any, item: { id: number }) => {
 			let startIndex = event.dataTransfer.getData("startIndex");
-			let endIndex = this.locations.findIndex((e: { id: number }) => e.id == item.id);
+			let endIndex = locations.value.findIndex((e: { id: number }) => e.id == item.id);
 			document.querySelectorAll<any>("#location-item")[endIndex].classList.remove("bg-secondary");
 
-			let locations = this.swapItems(this.locations, startIndex, endIndex);
-			this.$store.dispatch("setLocalStorageLocations", locations);
+			let newLocations = swapItems(locations.value, startIndex, endIndex);
+			store.dispatch("setLocalStorageLocations", newLocations);
 
-			this.$store.commit("SWAP_WEATHER", { startIndex: startIndex, endIndex: endIndex });
-		},
+			store.commit("SWAP_WEATHER", { startIndex: startIndex, endIndex: endIndex });
+		}
 
-		swapItems(array: string[], startIndex: number, endIndex: number) {
+		const swapItems = (array: string[], startIndex: number, endIndex: number) => {
 			let temp = array[startIndex];
 			array[startIndex] = array[endIndex];
 			array[endIndex] = temp;
 
 			return array;
-		},
+		}
 
-		removeLocation(item: { id: number }) {
-			let index = this.locations.findIndex((e: { id: number }) => e.id == item.id);
-			this.$store.commit("REMOVE_WEATHER", index);
+		const removeLocation = (item: { id: number }) => {
+			let index = locations.value.findIndex((e: { id: number }) => e.id == item.id);
+			store.commit("REMOVE_WEATHER", index);
 
-			let locations = this.locations.filter((e: { id: number }) => e.id !== item.id);
-			this.$store.dispatch("setLocalStorageLocations", locations);
+			let newLocations = locations.value.filter((e: { id: number }) => e.id !== item.id);
+			store.dispatch("setLocalStorageLocations", newLocations);
 
-			if (!this.locations[0]) {
-				this.$store.dispatch("check");
+			if (!locations.value[0]) {
+				store.dispatch("check");
 			}
-		},
-	},
-});
+		}
+		return {
+			removeLocation,
+			swapItems,
+			onDrop,
+			onDragLeave,
+			onDragEnter,
+			onDragStart,
+			locations
+		}
+	}
+};
 </script>

@@ -5,7 +5,7 @@
 			<div class="flex justify-center mx-auto my-0">
 				<p class="inline font-normal text-lg mr-[5px]">{{ item.name }}</p>
 				<img class="mx-[5px] my-auto"
-					:srcset="`https://flagcdn.com/40x30/${item.sys?.country?.toLowerCase()}.png 2x, https://flagcdn.com/60x45/${item.sys.country.toLowerCase()}.png 3x`"
+					:srcset="`https://flagcdn.com/40x30/${item.sys?.country?.toLowerCase()}.png 2x, https://flagcdn.com/60x45/${item.sys?.country?.toLowerCase()}.png 3x`"
 					width="20" height="15" :alt="item.sys?.country" />
 			</div>
 
@@ -73,14 +73,15 @@
 </template>
 
 <script lang='ts'>
-import { mapGetters } from "vuex";
-import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
-export default defineComponent({
-	computed: {
-		...mapGetters({
-			weather: "GET_WEATHER",
-		}),
+export default {
+	setup() {
+		const store = useStore();
+		return {
+			weather: computed(() => store.getters['GET_WEATHER']),
+		}
 	},
-});
+}
 </script>

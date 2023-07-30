@@ -22,22 +22,20 @@
 <script lang='ts'>
 import AddLocation from "./AddLocation.vue";
 import LocationsList from "./LocationsList.vue";
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+import { SetupContext } from 'vue';
+export default {
 	components: {
 		AddLocation,
 		LocationsList,
 	},
 
-	methods: {
-		closeSettings() {
-			document.querySelectorAll<HTMLElement>("#settings__content")[0].style.animation = "fadeOut_slideDown 0.275s ease-in-out";
-			document.querySelectorAll<HTMLElement>("#settings__mask")[0].style.animation = "fadeOut 0.275s ease-in-out";
+	setup(props: any, context: any) {
+		function closeSettings() {
 			setTimeout(() => {
-				this.$emit("closeSettings");
+				context.emit("closeSettings");
 			}, 275);
-		},
-	},
-});
+		}
+		return { closeSettings }
+	}
+}
 </script>
