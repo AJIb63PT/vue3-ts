@@ -19,7 +19,7 @@ import { SetupContext } from 'vue';
 export default {
 	setup(props: any, context: any) {
 		function openSettings() {
-			context.emit('openSettings')
+			context.emit('openSettings');
 		}
 		return { openSettings }
 	}
