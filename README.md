@@ -1,6 +1,6 @@
 
 # weather-widget #
-## app on vue 3 with typeScript, Babel, SCSS ##
+## app on vue 3 with TypeScript, Babel, TAILWIND ##
 
 ## github page ##
 https://ajib63pt.github.io/vue3-ts/
