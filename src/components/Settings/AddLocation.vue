@@ -47,7 +47,7 @@ export default {
         let isExistCity = ref(false);
         async function fetchWeather(city: string) {
             try {
-                await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=65a065a167f4ea7978f769aa4eabcb6d`)
+                await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=65a065a167f4ea7978f769aa4eabcb6d`)
                     .then((response) => {
                         if (response.ok) {
                             isExistCity.value = true;
